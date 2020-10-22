@@ -1,0 +1,1 @@
+# palikohrnne-mobile-app
