@@ -1,0 +1,23 @@
+name: palikorne
+description: A new Flutter application.
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.16.0
+  intl_translation: ^0.17.1
+  responsive_builder: ^0.3.0
+  cupertino_icons: ^0.1.2
+  shared_preferences: ^0.5.12+4
+
+flutter:
+  uses-material-design: true
+flutter_intl:
+  enabled: true
