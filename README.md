@@ -1,4 +1,4 @@
-# palikorne
+# flutter_cube
 
 A new Flutter application.
 
