@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:palikorne/app/view/LoginView.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:palikorne/generated/l10n.dart';
 
@@ -29,9 +30,7 @@ class ThemeSwitcher extends InheritedWidget {
         super(key: key, child: child);
 
   static _ThemeSwitcherWidgetState of(BuildContext context) {
-    return (context.inheritFromWidgetOfExactType(ThemeSwitcher)
-    as ThemeSwitcher)
-        .data;
+    return (context.dependOnInheritedWidgetOfExactType<ThemeSwitcher>()).data;
   }
 
   @override
@@ -99,7 +98,7 @@ class MyApp extends StatelessWidget {
       ],
       supportedLocales: S.delegate.supportedLocales,
       theme: ThemeSwitcher.of(context).myTheme,
-      home: Center(child: Text("Test"),),
+      home: LoginView(),
     );
   }
 }

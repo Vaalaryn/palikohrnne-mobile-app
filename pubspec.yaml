@@ -11,11 +11,18 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  intl: ^0.16.0
-  intl_translation: ^0.17.1
-  responsive_builder: ^0.3.0
-  cupertino_icons: ^0.1.2
-  shared_preferences: ^0.5.12+4
+  intl: ^0.17.0
+  responsive_builder: ^0.4.1
+  cupertino_icons: ^1.0.2
+  shared_preferences: ^2.0.5
+  auto_size_text: ^2.1.0
+  webview_flutter: ^2.0.3
+  flutter_material_color_picker: ^1.0.5
+  flutter_colorpicker: any
+  http: ^0.13.1
+  share: ^2.0.1
+  provider: ^5.0.0
+  multiselect_formfield: ^0.1.2
 
 flutter:
   uses-material-design: true
