@@ -16,6 +16,7 @@ class RessourceView extends StatefulWidget {
 
 class _RessourceViewState extends State<RessourceView> {
   final String _id;
+  dynamic _data = null;
 
   _RessourceViewState(this._id);
 
@@ -23,52 +24,67 @@ class _RessourceViewState extends State<RessourceView> {
     final response = await get(Uri.http(Constante.baseApiUrl, "/ressources/" + _id), headers: {'Content-type': 'application/json'});
     debugPrint(response.statusCode.toString());
     if (response.statusCode == 200) {
-      return jsonDecode(response.body)['data'];
-    } else {
+      setState(() {
+        _data = jsonDecode(response.body)['data'];
+      });
+      } else {
       throw Exception('Failed to load ressource');
     }
   }
 
+
+  // TODO mise en forme de commentaires
   List<Widget> buildComentaire(){
-    List<Widget> commentaire = [Text("Test"), Text("Test")];
-    return commentaire;
+    List<Widget> commentaires = [];
+    for (dynamic commentaire in _data["Commentaires"]){
+      debugPrint(commentaire["Nom"]);
+      Commentaire();
+      commentaires.add(Chip(label: Text(commentaire["Contenu"])));
+    }
+    return commentaires;
+  }
+
+  List<Widget> buildTag(){
+    List<Widget> tags = [];
+    for (dynamic tag in _data["Tags"]){
+      debugPrint(tag["Nom"]);
+      tags.add(Chip(label: Text(tag["Nom"])));
+    }
+    return tags;
   }
 
   @override
   void initState() {
+    getRessourceData();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<dynamic>(
-        future: getRessourceData(),
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          return Scaffold(
+    return (_data != null) ? Scaffold(
             appBar: AppBar(
               bottom: PreferredSize(child: Container(color:  Theme.of(context).primaryColor, height: 4.0,), preferredSize: Size.fromHeight(4.0)),
             ),
             body: ListView(children: [
-              Text("Titre"),
+              Text(_data["Titre"]),
               Row(children: [
-                Text("Publié"),
-                Text("Dernoere activite"),
-                Text("Vues")
+                Text("Publié : " + _data["CreatedAt"]),
+                Text("Dernoere activite : " + _data["UpdatedAt"]),
+                Text("Vues : " + _data["Vues"].toString())
               ]),
               Row(children: [
                 Column(children: [
                   Icon(Icons.favorite),
-                  Text("100")
+                  Text(_data["Votes"].toString())
                 ]),
                 Column(
                   children: [
-                    Text("Ceci est le contenu "),
-                    Row(children: [Chip(label: Text("Test"))])
+                    Text(_data["Contenu"]),
+                    Row(children: buildTag())
                   ])]),
-              Text("Nombre de réponse"),
+              Text("Nombre de réponse : " + _data["Commentaires"].length.toString()),
               ...buildComentaire()
             ])
-          );
-        });
+          ) : Container();
   }
 }
