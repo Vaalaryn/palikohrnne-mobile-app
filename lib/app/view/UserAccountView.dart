@@ -3,19 +3,27 @@ import 'package:palikorne/app/model/User.dart';
 import 'package:palikorne/generated/l10n.dart';
 
 class UserAccountView extends StatefulWidget {
-  createState() => UserAccountViewState();
+  UserAccountViewState createState() => UserAccountViewState();
 }
 
-class UserAccountViewState extends State<UserAccountView> {
+class UserAccountViewState extends State<UserAccountView>  {
   final _formKey = GlobalKey<FormState>();
+  final List<String> _genreChoices = ['M', 'F', 'N'].toList();
+  String _selectedChoice;
 
   @override
   void initState() {
     super.initState();
+    //_selectedChoice = User.Genre;
   }
 
   @override
   Widget build(BuildContext context) {
+    final dropdownMenuGenreOptions = _genreChoices
+        .map((String item) =>
+            new DropdownMenuItem<String>(value: item, child: new Text(item))
+            ).toList();
+    print(_selectedChoice);
     return ListView(children: [
       ListTile(
           title: Text(User.Nom + " " + User.Prenom),
@@ -350,11 +358,24 @@ class UserAccountViewState extends State<UserAccountView> {
                               children: <Widget>[
                                 Padding(
                                   padding: EdgeInsets.all(8.0),
-                                  child: TextFormField(
-                                    decoration: InputDecoration(
-                                      labelText: S.of(context).profilGenre,),
-                                    initialValue: User.Genre,
-                                  ),
+                                  child: Column(
+                                      children: <Widget>[
+                                          Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: <Widget>[
+                                              Text(S.of(context).profilGenre),
+                                              Container(width: 8),
+                                              DropdownButton<String>(
+                                                  items: dropdownMenuGenreOptions,
+                                                  onChanged: (String newValue) {
+                                                      setState(() {
+                                                          _selectedChoice = newValue;
+                                                      });
+                                                  },
+                                                  value: _selectedChoice,
+                                              ),
+                                          ]),
+                                  ]),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
