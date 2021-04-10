@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:palikorne/app/model/User.dart';
 import 'package:palikorne/generated/l10n.dart';
+import 'package:palikorne/config/Constante.dart';
 
 class UserAccountView extends StatefulWidget {
   UserAccountViewState createState() => UserAccountViewState();
@@ -10,6 +11,14 @@ class UserAccountViewState extends State<UserAccountView>  {
   final _formKey = GlobalKey<FormState>();
   final List<String> _genreChoices = ['M', 'F', 'N'].toList();
   String _selectedChoice;
+  String Mail;
+  String userName;
+  String lastName;
+  String firstName;
+  String phoneNumber;
+  String address;
+  String zipCode;
+  String city;
 
   @override
   void initState() {
@@ -82,6 +91,19 @@ class UserAccountViewState extends State<UserAccountView>  {
                                         decoration: InputDecoration(
                                           labelText: S.of(context).profilUserName,),
                                         initialValue: User.Pseudo,
+                                        validator: (value) {
+                                  if (value.isEmpty) {
+                                  return S.of(context).inscriptionMsgFieldsEmpty;
+                                  }
+                                  RegExp regExp = new RegExp(Constante.regexUsername,
+                                  caseSensitive: false, multiLine: false);
+                                  if (regExp.hasMatch(value)) {
+                                  this.userName = value;
+                                  } else {
+                                  return S.of(context).inscriptionMsgWrongMail;
+                                  }
+                                  return null;
+                                  },
                                     ),
                                   ),
                                   Padding(
@@ -296,6 +318,19 @@ class UserAccountViewState extends State<UserAccountView>  {
                                     decoration: InputDecoration(
                                       labelText: S.of(context).profilMail,),
                                     initialValue: User.Mail,
+                                    validator: (value) {
+                                      if (value.isEmpty) {
+                                        return S.of(context).inscriptionMsgFieldsEmpty;
+                                      }
+                                      RegExp regExp = new RegExp(Constante.regexMail,
+                                          caseSensitive: false, multiLine: false);
+                                      if (regExp.hasMatch(value)) {
+                                        this.Mail = value;
+                                      } else {
+                                        return S.of(context).inscriptionMsgWrongMail;
+                                      }
+                                      return null;
+                                    },
                                   ),
                                 ),
                                 Padding(
