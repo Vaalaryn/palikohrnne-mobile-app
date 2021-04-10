@@ -6,6 +6,8 @@ class UserAccountView extends StatefulWidget {
 }
 
 class UserAccountViewState extends State<UserAccountView> {
+  final _formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     super.initState();
@@ -23,7 +25,75 @@ class UserAccountViewState extends State<UserAccountView> {
                   "...",
                   style: TextStyle(
                       fontSize: 25, color: Colors.white)),
-              onPressed: () {}
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        content: Stack(
+                          overflow: Overflow.visible,
+                          children: <Widget>[
+                            Positioned(
+                              right: -40.0,
+                              top: -40.0,
+                              child: InkResponse(
+                                onTap: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: CircleAvatar(
+                                  child: Icon(Icons.close),
+                                  backgroundColor: Colors.red,
+                                ),
+                              ),
+                            ),
+                            Form(
+                              key: _formKey,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: TextFormField(
+                                      decoration: InputDecoration(
+                                        labelText:"Prénom",),
+                                      initialValue: User.Prenom,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: TextFormField(
+                                        decoration: InputDecoration(
+                                          labelText:"Nom",),
+                                        initialValue: User.Nom,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: TextFormField(
+                                        decoration: InputDecoration(
+                                          labelText:"Pseudo",),
+                                        initialValue: User.Pseudo,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: RaisedButton(
+                                      child: Text("Yolo !"),
+                                      onPressed: () {
+                                        if (_formKey.currentState.validate()) {
+                                          _formKey.currentState.save();
+                                        }
+                                      },
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    });
+              },
               ),
       ),
       ListTile(
