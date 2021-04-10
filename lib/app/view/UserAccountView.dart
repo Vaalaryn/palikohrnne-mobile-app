@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:palikorne/app/model/User.dart';
+import 'package:palikorne/generated/l10n.dart';
 
 class UserAccountView extends StatefulWidget {
   createState() => UserAccountViewState();
@@ -55,7 +56,7 @@ class UserAccountViewState extends State<UserAccountView> {
                                     padding: EdgeInsets.all(8.0),
                                     child: TextFormField(
                                       decoration: InputDecoration(
-                                        labelText:"Prénom",),
+                                        labelText: S.of(context).profilFirstName,),
                                       initialValue: User.Prenom,
                                     ),
                                   ),
@@ -63,7 +64,7 @@ class UserAccountViewState extends State<UserAccountView> {
                                     padding: EdgeInsets.all(8.0),
                                     child: TextFormField(
                                         decoration: InputDecoration(
-                                          labelText:"Nom",),
+                                          labelText: S.of(context).profilLastName,),
                                         initialValue: User.Nom,
                                     ),
                                   ),
@@ -71,17 +72,19 @@ class UserAccountViewState extends State<UserAccountView> {
                                     padding: EdgeInsets.all(8.0),
                                     child: TextFormField(
                                         decoration: InputDecoration(
-                                          labelText:"Pseudo",),
+                                          labelText: S.of(context).profilUserName,),
                                         initialValue: User.Pseudo,
                                     ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: RaisedButton(
-                                      child: Text("Yolo !"),
+                                      child: Text(S.of(context).profilSaveModifications),
                                       onPressed: () {
                                         if (_formKey.currentState.validate()) {
                                           _formKey.currentState.save();
+                                          Navigator.of(context).pop();
+                                          // TODO : update user via api
                                         }
                                       },
                                     ),
@@ -105,7 +108,77 @@ class UserAccountViewState extends State<UserAccountView> {
                 "...",
                 style: TextStyle(
                     fontSize: 25, color: Colors.white)),
-            onPressed: () {}
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      content: Stack(
+                        overflow: Overflow.visible,
+                        children: <Widget>[
+                          Positioned(
+                            right: -40.0,
+                            top: -40.0,
+                            child: InkResponse(
+                              onTap: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: CircleAvatar(
+                                child: Icon(Icons.close),
+                                backgroundColor: Colors.red,
+                              ),
+                            ),
+                          ),
+                          Form(
+                            key: _formKey,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: TextFormField(
+                                    decoration: InputDecoration(
+                                      labelText: S.of(context).profilAddress,),
+                                    initialValue: User.Adresse,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: TextFormField(
+                                    decoration: InputDecoration(
+                                      labelText: S.of(context).profilZipCode,),
+                                    initialValue: User.CodePostal,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: TextFormField(
+                                    decoration: InputDecoration(
+                                      labelText: S.of(context).profilCity,),
+                                    initialValue: User.Ville,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: RaisedButton(
+                                    child: Text(S.of(context).profilSaveModifications),
+                                    onPressed: () {
+                                      if (_formKey.currentState.validate()) {
+                                        _formKey.currentState.save();
+                                        Navigator.of(context).pop();
+                                        // TODO : update user via api
+                                      }
+                                    },
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  });
+            },
         ),
       ),
       ListTile(
@@ -117,7 +190,61 @@ class UserAccountViewState extends State<UserAccountView> {
                 "...",
                 style: TextStyle(
                     fontSize: 25, color: Colors.white)),
-            onPressed: () {}
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      content: Stack(
+                        overflow: Overflow.visible,
+                        children: <Widget>[
+                          Positioned(
+                            right: -40.0,
+                            top: -40.0,
+                            child: InkResponse(
+                              onTap: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: CircleAvatar(
+                                child: Icon(Icons.close),
+                                backgroundColor: Colors.red,
+                              ),
+                            ),
+                          ),
+                          Form(
+                            key: _formKey,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: TextFormField(
+                                    decoration: InputDecoration(
+                                      labelText: S.of(context).profilPhoneNumber,),
+                                    initialValue: User.Telephone,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: RaisedButton(
+                                    child: Text(S.of(context).profilSaveModifications),
+                                    onPressed: () {
+                                      if (_formKey.currentState.validate()) {
+                                        _formKey.currentState.save();
+                                        Navigator.of(context).pop();
+                                        // TODO : update user via api
+                                      }
+                                    },
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  });
+            },
         ),
       ),
       ListTile(
@@ -129,7 +256,61 @@ class UserAccountViewState extends State<UserAccountView> {
                 "...",
                 style: TextStyle(
                     fontSize: 25, color: Colors.white)),
-            onPressed: () {}
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      content: Stack(
+                        overflow: Overflow.visible,
+                        children: <Widget>[
+                          Positioned(
+                            right: -40.0,
+                            top: -40.0,
+                            child: InkResponse(
+                              onTap: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: CircleAvatar(
+                                child: Icon(Icons.close),
+                                backgroundColor: Colors.red,
+                              ),
+                            ),
+                          ),
+                          Form(
+                            key: _formKey,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: TextFormField(
+                                    decoration: InputDecoration(
+                                      labelText: S.of(context).profilMail,),
+                                    initialValue: User.Mail,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: RaisedButton(
+                                    child: Text(S.of(context).profilSaveModifications),
+                                    onPressed: () {
+                                      if (_formKey.currentState.validate()) {
+                                        _formKey.currentState.save();
+                                        Navigator.of(context).pop();
+                                        // TODO : update user via api
+                                      }
+                                    },
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  });
+            },
         ),
       ),
       ListTile(
@@ -141,7 +322,61 @@ class UserAccountViewState extends State<UserAccountView> {
                 "...",
                 style: TextStyle(
                     fontSize: 25, color: Colors.white)),
-            onPressed: () {}
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      content: Stack(
+                        overflow: Overflow.visible,
+                        children: <Widget>[
+                          Positioned(
+                            right: -40.0,
+                            top: -40.0,
+                            child: InkResponse(
+                              onTap: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: CircleAvatar(
+                                child: Icon(Icons.close),
+                                backgroundColor: Colors.red,
+                              ),
+                            ),
+                          ),
+                          Form(
+                            key: _formKey,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: TextFormField(
+                                    decoration: InputDecoration(
+                                      labelText: S.of(context).profilGenre,),
+                                    initialValue: User.Genre,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: RaisedButton(
+                                    child: Text(S.of(context).profilSaveModifications),
+                                    onPressed: () {
+                                      if (_formKey.currentState.validate()) {
+                                        _formKey.currentState.save();
+                                        Navigator.of(context).pop();
+                                        // TODO : update user via api
+                                      }
+                                    },
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  });
+            },
         ),
       ),
       ElevatedButton(onPressed: () {}, child: Text("Changer le mot de passe")),
