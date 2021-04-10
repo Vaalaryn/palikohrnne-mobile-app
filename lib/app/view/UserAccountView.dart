@@ -17,22 +17,62 @@ class UserAccountViewState extends State<UserAccountView> {
       ListTile(
           title: Text(User.Nom + " " + User.Prenom),
           subtitle: Text(User.Pseudo),
+          trailing: RaisedButton(
+              color: Theme.of(context).primaryColor,
+              child: Text(
+                  "...",
+                  style: TextStyle(
+                      fontSize: 25, color: Colors.white)),
+              onPressed: () {}
+              ),
       ),
       ListTile(
           subtitle: Text(User.Adresse + ", " + User.CodePostal + " " + User.Ville),
           title: Text("Adresse"),
+          trailing: RaisedButton(
+            color: Theme.of(context).primaryColor,
+            child: Text(
+                "...",
+                style: TextStyle(
+                    fontSize: 25, color: Colors.white)),
+            onPressed: () {}
+        ),
       ),
       ListTile(
           title: Text("Téléphone"),
-          subtitle: Text(User.Telephone)
+          subtitle: Text(User.Telephone),
+          trailing: RaisedButton(
+            color: Theme.of(context).primaryColor,
+            child: Text(
+                "...",
+                style: TextStyle(
+                    fontSize: 25, color: Colors.white)),
+            onPressed: () {}
+        ),
       ),
       ListTile(
           title: Text("Mail"),
-          subtitle: Text(User.Mail)
+          subtitle: Text(User.Mail),
+          trailing: RaisedButton(
+            color: Theme.of(context).primaryColor,
+            child: Text(
+                "...",
+                style: TextStyle(
+                    fontSize: 25, color: Colors.white)),
+            onPressed: () {}
+        ),
       ),
       ListTile(
-        title: Text("Genre"),
-          subtitle: Text(User.Genre)
+          title: Text("Genre"),
+          subtitle: Text(User.Genre),
+          trailing: RaisedButton(
+            color: Theme.of(context).primaryColor,
+            child: Text(
+                "...",
+                style: TextStyle(
+                    fontSize: 25, color: Colors.white)),
+            onPressed: () {}
+        ),
       ),
       ElevatedButton(onPressed: () {}, child: Text("Changer le mot de passe")),
       ElevatedButton(onPressed: () {}, child: Text("Deconnexion"))
