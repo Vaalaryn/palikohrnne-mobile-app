@@ -5,7 +5,7 @@ import 'package:palikorne/generated/l10n.dart';
 class ResourceHelper {
   static String getTimePassedFromDate(String date, BuildContext context){
     var now = new DateTime.now();
-    DateTime dateTime = DateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'").parse(date);
+    DateTime dateTime = DateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'").parse(date);
     var deltaTime = now.difference(dateTime).inMinutes;
     String msg;
     if (deltaTime < 60) {
