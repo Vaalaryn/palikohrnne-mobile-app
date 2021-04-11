@@ -4,11 +4,7 @@ import 'package:palikorne/app/view/LoginView.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:palikorne/generated/l10n.dart';
 
-ThemeData myTheme = ThemeData(
-    primaryColor: Colors.red,
-    accentColor: Colors.redAccent,
-    brightness: Brightness.dark
-);
+ThemeData myTheme = ThemeData();
 
 void main() {
   runApp(
