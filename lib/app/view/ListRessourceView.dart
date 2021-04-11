@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:palikorne/app/helper/RessourceHelper.dart';
 import 'package:palikorne/config/Constante.dart';
 import 'package:palikorne/app/view/RessourceView.dart';
 
@@ -51,15 +52,20 @@ class ListResourceViewState extends State<ListResourceView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(child: Icon(Icons.add), onPressed: (){},),
-      body: ListView.builder(
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.more_horiz),
+        onPressed: (){
 
+        }
+        ),
+      body: ListView.builder(
         itemCount: item.length,
         itemBuilder: (BuildContext context2, int index){
+          index = item.length - index - 1;
           return ListTile(
               title: Text(item[index]['Titre'], style: TextStyle(fontSize: 17)),
               subtitle: getSubtitle(item[index]['Vues'], item[index]['Votes'], item[index]['Commentaires'].length),
-              trailing: Text('time'),
+              trailing: Text(ResourceHelper.getTimePassedFromDate(item[index]["CreatedAt"], context)),
               onTap: () {
                 Navigator.push(
                     context, MaterialPageRoute(builder: (context) => RessourceView(item[index]["ID"].toString())));
