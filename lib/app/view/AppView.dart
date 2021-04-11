@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:palikorne/app/view/ListRessourceView.dart';
-
 import 'package:palikorne/app/view/SettingsView.dart';
 import 'package:palikorne/app/view/UserAccountView.dart';
 
 import 'AdminView.dart';
 
 class AppView extends StatefulWidget {
-
   @override
   AppViewState createState() => AppViewState();
 }
 
 class AppViewState extends State<AppView> with SingleTickerProviderStateMixin {
+  List test = [];
+
   TabController controller;
 
   @override
   void initState() {
     super.initState();
-    controller = TabController(length: 4, vsync: this);
+    controller = TabController(length: (3 >= 2) ? 4 : 5, vsync: this);
   }
 
   @override
@@ -29,12 +29,12 @@ class AppViewState extends State<AppView> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: TabBarView(
         children: <Widget>[
           ListResourceView(),
-          AdminView(),
+          ListResourceView(),
+          ...((3 >= 2) ? test : [AdminView()]),
           UserAccountView(),
           SettingsView()
         ],
@@ -47,15 +47,24 @@ class AppViewState extends State<AppView> with SingleTickerProviderStateMixin {
             tabs: <Tab>[
               Tab(
                   icon: Icon(
-                    Icons.library_books,
-                    size: 25,
-                  )),
+                Icons.library_books,
+                size: 25,
+              )),
               Tab(
-                icon: Icon(
-                  Icons.star,
-                  size: 25,
-                ),
-              ),
+                  icon: Icon(
+                Icons.library_books,
+                size: 25,
+              )),
+              ...((3 >= 2)
+                  ? test
+                  : [
+                      Tab(
+                        icon: Icon(
+                          Icons.star,
+                          size: 25,
+                        ),
+                      )
+                    ]),
               Tab(
                 icon: Icon(
                   Icons.person,
@@ -71,8 +80,7 @@ class AppViewState extends State<AppView> with SingleTickerProviderStateMixin {
             ],
             controller: controller,
             labelColor: Theme.of(context).primaryColor,
-            unselectedLabelColor: Theme.of(context).textTheme.body1.color
-        ),
+            unselectedLabelColor: Theme.of(context).textTheme.body1.color),
       ),
     );
   }
