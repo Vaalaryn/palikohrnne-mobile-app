@@ -18,7 +18,7 @@ class AppViewState extends State<AppView> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    controller = TabController(length: (3 >= 2) ? 4 : 5, vsync: this);
+    controller = TabController(length: !(3 >= 2) ? 4 : 5, vsync: this);
   }
 
   @override
@@ -34,7 +34,7 @@ class AppViewState extends State<AppView> with SingleTickerProviderStateMixin {
         children: <Widget>[
           ListResourceView(),
           ListResourceView(),
-          ...((3 >= 2) ? test : [AdminView()]),
+          ...(!(3 >= 2) ? test : [AdminView()]),
           UserAccountView(),
           SettingsView()
         ],
@@ -52,10 +52,10 @@ class AppViewState extends State<AppView> with SingleTickerProviderStateMixin {
               )),
               Tab(
                   icon: Icon(
-                Icons.library_books,
+                Icons.favorite,
                 size: 25,
               )),
-              ...((3 >= 2)
+              ...(!(3 >= 2)
                   ? test
                   : [
                       Tab(
