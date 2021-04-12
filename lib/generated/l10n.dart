@@ -415,6 +415,106 @@ class S {
     );
   }
 
+  /// `Username`
+  String get profilUserName {
+    return Intl.message(
+      'Username',
+      name: 'profilUserName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last name`
+  String get profilLastName {
+    return Intl.message(
+      'Last name',
+      name: 'profilLastName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `First name`
+  String get profilFirstName {
+    return Intl.message(
+      'First name',
+      name: 'profilFirstName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save`
+  String get profilSaveModifications {
+    return Intl.message(
+      'Save',
+      name: 'profilSaveModifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Address`
+  String get profilAddress {
+    return Intl.message(
+      'Address',
+      name: 'profilAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Zip code`
+  String get profilZipCode {
+    return Intl.message(
+      'Zip code',
+      name: 'profilZipCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `City`
+  String get profilCity {
+    return Intl.message(
+      'City',
+      name: 'profilCity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone number`
+  String get profilPhoneNumber {
+    return Intl.message(
+      'Phone number',
+      name: 'profilPhoneNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email address`
+  String get profilMail {
+    return Intl.message(
+      'Email address',
+      name: 'profilMail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Genre`
+  String get profilGenre {
+    return Intl.message(
+      'Genre',
+      name: 'profilGenre',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Sign up`
   String get inscriptionTitle {
     return Intl.message(

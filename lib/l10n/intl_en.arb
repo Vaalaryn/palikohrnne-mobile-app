@@ -40,6 +40,16 @@
   "profilLangDe":"Deutsch",
   "profilLangEs":"Español",
   "profilLangJp":"日本の",
+  "profilUserName":"Username",
+  "profilLastName":"Last name",
+  "profilFirstName":"First name",
+  "profilSaveModifications":"Save",
+  "profilAddress":"Address",
+  "profilZipCode":"Zip Code",
+  "profilCity":"City",
+  "profilPhoneNumber":"Phone number",
+  "profilMail":"Mail address",
+  "profilGenre":"Genre",
 
 
   "inscriptionTitle": "Sign up",
