@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:palikorne/app/helper/RessourceHelper.dart';
+import 'package:palikorne/app/model/User.dart';
 import 'package:palikorne/app/widget/Commentaire.dart';
 import 'package:palikorne/app/widget/LineBreak.dart';
 import 'package:palikorne/config/Constante.dart';
@@ -22,6 +23,7 @@ class _RessourceViewState extends State<RessourceView> {
   final String _id;
   bool isFav = false;
   dynamic _data = null;
+  String contenu = "";
 
   _RessourceViewState(this._id);
 
@@ -52,7 +54,10 @@ class _RessourceViewState extends State<RessourceView> {
     for (dynamic tag in _data["Tags"]) {
       tags.add(
         Container(
-            margin: EdgeInsets.all(3.0), child: Chip(label: Text(tag["Nom"]))),
+            margin: EdgeInsets.all(3.0),
+            child: Chip(
+                label: Text(tag["Nom"]),
+                backgroundColor: Theme.of(context).primaryColor)),
       );
     }
     return tags;
@@ -66,6 +71,7 @@ class _RessourceViewState extends State<RessourceView> {
 
   @override
   Widget build(BuildContext context) {
+    isFav = _data["CitoyenVoted"].where((item) => item["ID"] == User.Id).toList().length > 0 ;
     return (_data != null)
         ? Scaffold(
             appBar: AppBar(
@@ -141,10 +147,35 @@ class _RessourceViewState extends State<RessourceView> {
                                       color: isFav
                                           ? Colors.redAccent
                                           : Colors.grey),
-                                  onPressed: () {
-                                    setState(() {
-                                      isFav = !isFav;
-                                    });
+                                  onPressed: () async {
+                                    Object data = {
+                                      "RessourceID": int.parse(_id),
+                                      "CitoyenID":   User.Id,
+                                    };
+                                    var response;
+                                    if(!isFav) {
+                                    response = await post(
+                                        Uri.http(Constante.baseApiUrl, "/api/voteRessources"),
+                                        headers: {
+                                          'Content-type': 'application/json',
+                                          'Authorization': 'Bearer ' + User.Token
+                                        },
+                                        body: jsonEncode(data));
+                                    }else {
+                                      response = await delete(
+                                          Uri.http(Constante.baseApiUrl, "/api/voteRessources/${User.Id}/${_id}"),
+                                          headers: {
+                                            'Content-type': 'application/json',
+                                            'Authorization': 'Bearer ' + User.Token
+                                          });
+                                    }
+                                    if (response.statusCode ==
+                                        200) {
+                                      getRessourceData();
+                                      setState(() {
+                                        isFav = !isFav;
+                                      });
+                                    }
                                   }),
                               Text(
                                 _data["Votes"].toString(),
@@ -182,7 +213,8 @@ class _RessourceViewState extends State<RessourceView> {
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 20)),
                             IconButton(
-                                icon: Icon(Icons.comment),
+                                icon: Icon(Icons.comment,
+                                    color: Theme.of(context).primaryColor),
                                 onPressed: () {
                                   showDialog(
                                       context: context,
@@ -190,24 +222,49 @@ class _RessourceViewState extends State<RessourceView> {
                                           AlertDialog(
                                             content: Stack(
                                               children: [
-                                                Text("Ajout d'un commentaire", style: TextStyle(fontSize: 18)),
+                                                Text("Ajout d'un commentaire",
+                                                    style: TextStyle(
+                                                        fontSize: 18)),
                                                 Container(
-                                                  margin: EdgeInsets.only(top: 20),
-                                                  child: TextFormField(maxLines: 10,minLines: 2),
+                                                  margin:
+                                                      EdgeInsets.only(top: 20),
+                                                  child: TextFormField(
+                                                    onChanged: (value) {
+                                                      contenu = value;
+                                                    },
+                                                      maxLines: 10,
+                                                      minLines: 2),
                                                 )
                                               ],
                                             ),
                                             actions: <Widget>[
                                               FlatButton(
                                                   child: Text("Annuler"),
-                                                  onPressed: () =>
-                                                      Navigator.pop(context)),
+                                                  onPressed: () => Navigator.pop(context)),
                                               FlatButton(
                                                   child: Text(S
                                                       .of(context)
                                                       .connexionCloseError),
-                                                  onPressed: () =>
-                                                      Navigator.pop(context))
+                                                  onPressed: () async {
+                                                    Object data = {
+                                                      "Contenu": contenu,
+                                                      "RessourceID": int.parse(_id),
+                                                      "ParentID":    null,
+                                                      "CitoyenID":   User.Id,
+                                                    };
+                                                    final response = await post(
+                                                        Uri.http(Constante.baseApiUrl, "/api/commentaires"),
+                                                        headers: {
+                                                          'Content-type': 'application/json',
+                                                          'Authorization': 'Bearer ' + User.Token
+                                                        },
+                                                        body: jsonEncode(data));
+                                                    if (response.statusCode ==
+                                                        200) {
+                                                      getRessourceData();
+                                                      Navigator.pop(context);
+                                                    }
+                                                  })
                                             ],
                                           ));
                                 }),

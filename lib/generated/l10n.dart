@@ -465,10 +465,10 @@ class S {
     );
   }
 
-  /// `Zip code`
+  /// `Zip Code`
   String get profilZipCode {
     return Intl.message(
-      'Zip code',
+      'Zip Code',
       name: 'profilZipCode',
       desc: '',
       args: [],
@@ -495,10 +495,10 @@ class S {
     );
   }
 
-  /// `Email address`
+  /// `Mail address`
   String get profilMail {
     return Intl.message(
-      'Email address',
+      'Mail address',
       name: 'profilMail',
       desc: '',
       args: [],

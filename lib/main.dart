@@ -4,8 +4,12 @@ import 'package:palikorne/app/view/LoginView.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:palikorne/generated/l10n.dart';
 
-ThemeData myTheme = ThemeData();
-
+ThemeData myTheme = ThemeData(
+  primaryColor: Color(0xff51b37f),
+  accentColor: Colors.lightGreenAccent,
+  backgroundColor: Colors.grey,
+  brightness: Brightness.light,
+);
 void main() {
   runApp(
     ThemeSwitcherWidget(

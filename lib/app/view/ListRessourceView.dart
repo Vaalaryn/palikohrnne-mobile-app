@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:palikorne/app/helper/RessourceHelper.dart';
+import 'package:palikorne/app/view/NewRessource.dart';
 import 'package:palikorne/config/Constante.dart';
 import 'package:palikorne/app/view/RessourceView.dart';
 
@@ -26,7 +27,7 @@ class ListResourceViewState extends State<ListResourceView> {
 
       tmp_item = jsonDecode(response.body)['data'];
       debugPrint(tmp_item.length.toString());
-      tmp_item.removeWhere((item) => item["ValidationAdmin"] == false);
+      tmp_item.removeWhere((item) => item["ValidationAdmin"] != true);
       setState(() {
         item = tmp_item;
         debugPrint(item.length.toString());
@@ -58,9 +59,11 @@ class ListResourceViewState extends State<ListResourceView> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.more_horiz),
+        child: Icon(Icons.add, color: Theme.of(context).accentColor),
+        backgroundColor: Theme.of(context).primaryColor,
         onPressed: (){
-
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => NewRessource()));
         }
         ),
       body: ListView.builder(

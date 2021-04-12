@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:palikorne/app/model/User.dart';
 import 'package:palikorne/generated/l10n.dart';
 import 'package:palikorne/main.dart';
 
@@ -32,10 +31,21 @@ class SettingsViewState extends State<SettingsView> {
             onChanged: (value) {
               setState(() {
                 isSwitched = !isSwitched;
-                // TODO faire un theme jour et nuit
-                ThemeSwitcher.of(context).switchTheme(ThemeData(
-                  brightness: value ? Brightness.dark : Brightness.light,
-                ));
+                ThemeData theme =
+                value ?
+                ThemeData(
+                  primaryColor: Color(0xff51b37f),
+                  accentColor: Colors.lightGreenAccent,
+                  backgroundColor: Colors.lime,
+                  brightness: Brightness.dark,
+                ) :
+                ThemeData(
+                  primaryColor: Color(0xff51b37f),
+                  accentColor: Colors.lightGreenAccent,
+                  backgroundColor: Colors.grey,
+                  brightness: Brightness.light,
+                );
+                ThemeSwitcher.of(context).switchTheme(theme);
               });
             },
             activeTrackColor: Theme.of(context).primaryColor,

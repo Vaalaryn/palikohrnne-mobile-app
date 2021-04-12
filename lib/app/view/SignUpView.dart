@@ -61,10 +61,10 @@ class SignUpViewState extends State<SignUpView> {
     ).toList();
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).backgroundColor,
+          backgroundColor: Theme.of(context).primaryColor,
           bottom: PreferredSize(
               child: Container(
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).accentColor,
                 height: 4.0,
               ),
               preferredSize: Size.fromHeight(4.0)),

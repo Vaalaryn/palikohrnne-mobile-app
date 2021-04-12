@@ -451,7 +451,7 @@ class UserAccountViewState extends State<UserAccountView>  {
         onPressed: () => User.disconnect(),
       ),
       FlatButton(
-        color: Theme.of(context).primaryColor,
+        color: Colors.red,
         child: Container(
             margin: EdgeInsets.all(10),
             child: ListTile(

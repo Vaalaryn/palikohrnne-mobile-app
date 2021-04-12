@@ -25,6 +25,8 @@ dependencies:
   multiselect_formfield: ^0.1.2
 
 flutter:
+  assets:
+    - lib/config/assets/logo.png
   uses-material-design: true
 flutter_intl:
   enabled: true

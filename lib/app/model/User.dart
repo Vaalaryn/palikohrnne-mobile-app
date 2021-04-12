@@ -40,8 +40,8 @@ class User {
   static String _Telephone;
   static String get Telephone => _Telephone;
 
-  static String _Rang;
-  static String get Rang => _Rang;
+  static int _Rang = 0;
+  static int get Rang => _Rang;
 
   static String _Token;
   static String get Token => _Token;
@@ -67,18 +67,15 @@ class User {
     _Mail = data["Mail"];
     _Prenom = data["Prenom"];
     _Nom = data["Nom"];
-    _Rang = data["Rang"];
-  }
-
-  static Future<bool> check() {
+    _Rang = int.parse(data["Rang"]);
   }
 
   static disconnect() {
-    _Mail = null;
+    thatLoginPage.unlogged();
     _Mail = "";
     _Prenom = "";
     _Nom = "";
-    _Rang = "";
+    _Rang = 0;
     _Token = "";
     _Ville = "";
     _Telephone = "";
@@ -90,8 +87,4 @@ class User {
 
   static updateData() async {
   }
-
-  static Future<String> updateUserData(String password,Object data) async {
-  }
-
 }

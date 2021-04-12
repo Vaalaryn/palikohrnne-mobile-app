@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:palikorne/app/model/User.dart';
 import 'package:palikorne/app/view/ListRessourceView.dart';
 import 'package:palikorne/app/view/SettingsView.dart';
 import 'package:palikorne/app/view/UserAccountView.dart';
@@ -18,7 +19,7 @@ class AppViewState extends State<AppView> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    controller = TabController(length: !(3 >= 2) ? 4 : 5, vsync: this);
+    controller = TabController(length: (User.Rang >= 2) ? 3 : 4, vsync: this);
   }
 
   @override
@@ -33,15 +34,14 @@ class AppViewState extends State<AppView> with SingleTickerProviderStateMixin {
       body: TabBarView(
         children: <Widget>[
           ListResourceView(),
-          ListResourceView(),
-          ...(!(3 >= 2) ? test : [AdminView()]),
+          ...((User.Rang >= 2) ? test : [AdminView()]),
           UserAccountView(),
           SettingsView()
         ],
         controller: controller,
       ),
       bottomNavigationBar: Material(
-        color: Theme.of(context).backgroundColor,
+        color: Theme.of(context).primaryColor,
         child: TabBar(
             indicatorColor: Theme.of(context).primaryColor,
             tabs: <Tab>[
@@ -50,12 +50,7 @@ class AppViewState extends State<AppView> with SingleTickerProviderStateMixin {
                 Icons.library_books,
                 size: 25,
               )),
-              Tab(
-                  icon: Icon(
-                Icons.favorite,
-                size: 25,
-              )),
-              ...(!(3 >= 2)
+              ...((User.Rang >= 2)
                   ? test
                   : [
                       Tab(
@@ -79,8 +74,8 @@ class AppViewState extends State<AppView> with SingleTickerProviderStateMixin {
               ),
             ],
             controller: controller,
-            labelColor: Theme.of(context).primaryColor,
-            unselectedLabelColor: Theme.of(context).textTheme.body1.color),
+            labelColor: Theme.of(context).accentColor,
+            unselectedLabelColor: Colors.white),
       ),
     );
   }

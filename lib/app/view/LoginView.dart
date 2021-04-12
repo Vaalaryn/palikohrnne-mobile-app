@@ -9,6 +9,7 @@ import 'package:palikorne/app/view/AppView.dart';
 import 'package:palikorne/app/view/SignUpView.dart';
 import 'package:palikorne/config/Constante.dart';
 import 'package:palikorne/generated/l10n.dart';
+import 'package:palikorne/main.dart';
 
 class LoginView extends StatefulWidget {
   createState() => LoginViewState();
@@ -18,6 +19,7 @@ class LoginViewState extends State<LoginView> {
   final _formKey = GlobalKey<FormState>();
   bool isLogged = false;
   bool rememberMe = false;
+  bool isSwitched = false;
   String dropValue = "fr";
   String password;
   String mail;
@@ -84,6 +86,17 @@ class LoginViewState extends State<LoginView> {
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                              width: 60,
+                              height: 60,
+                              child: Image(image: AssetImage('lib/config/assets/logo.png'))
+                          ),
+                          Text("Palikorne", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold))
+                        ]
+                      ),
                       Center(
                         child: Text(S.of(context).connexionTitle,
                             style: TextStyle(fontSize: 40)),
@@ -153,9 +166,6 @@ class LoginViewState extends State<LoginView> {
                                 Text(S.of(context).connexionLabelRememberMe)
                               ],
                             ),
-                            Container(
-                              height: 60,
-                            ),
                             RaisedButton(
                                 color: Theme.of(context).primaryColor,
                                 padding: EdgeInsets.all(20),
@@ -169,8 +179,7 @@ class LoginViewState extends State<LoginView> {
                                   if (_formKey.currentState.validate()) {
                                     this.connect(mail, password.toString()).then((value) {
                                       if (value != "") {
-                                        User.connect(mail, jsonDecode(value)["token"],
-                                            rememberMe);
+                                        User.connect(mail, jsonDecode(value)["token"], rememberMe);
                                         setState(() {
                                           this.isLogged = true;
                                         });
@@ -196,6 +205,7 @@ class LoginViewState extends State<LoginView> {
                           ],
                         ),
                       ),
+                      Container(height: 40),
                       DropdownButton(
                         value: dropValue,
                         items: [
@@ -227,6 +237,38 @@ class LoginViewState extends State<LoginView> {
                           });
                         },
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.wb_sunny, color: Theme.of(context).accentColor),
+                          Switch(
+                            value: isSwitched,
+                            onChanged: (value) {
+                              setState(() {
+                                isSwitched = !isSwitched;
+                                ThemeData theme =
+                                value ?
+                                ThemeData(
+                                  primaryColor: Color(0xff51b37f),
+                                  accentColor: Colors.lightGreenAccent,
+                                  backgroundColor: Colors.lime,
+                                  brightness: Brightness.dark,
+                                ) :
+                                ThemeData(
+                                  primaryColor: Color(0xff51b37f),
+                                  accentColor: Colors.lightGreenAccent,
+                                  backgroundColor: Colors.grey,
+                                  brightness: Brightness.light,
+                                );
+                                ThemeSwitcher.of(context).switchTheme(theme);
+                              });
+                            },
+                            activeTrackColor: Theme.of(context).primaryColor,
+                            activeColor: Theme.of(context).accentColor,
+                          ),
+                          Icon(Icons.wb_sunny_outlined, color: Colors.grey,)
+                        ],
+                      )
                     ])));
   }
 }
