@@ -21,6 +21,10 @@ class SignUpViewState extends State<SignUpView> {
   String username;
   String password;
   String password_confirm;
+  String nom;
+  String prenom;
+  final List<String> _genreChoices = ['M', 'F', 'N'].toList();
+  String _selectedChoice;
 
   Future<String> inscription() async {
     String url = Constante.baseApiUrl + '/fr/user/add';
@@ -44,8 +48,19 @@ class SignUpViewState extends State<SignUpView> {
 
   SignUpViewState(this.that);
 
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedChoice = 'N';
+  }
+
   @override
   Widget build(BuildContext context) {
+    final dropdownMenuGenreOptions = _genreChoices
+        .map((String item) =>
+    new DropdownMenuItem<String>(value: item, child: new Text(item))
+    ).toList();
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).backgroundColor,
@@ -76,6 +91,34 @@ class SignUpViewState extends State<SignUpView> {
                         key: _formKey,
                         child: Column(
                           children: <Widget>[
+                            TextFormField(
+                              cursorColor: Theme.of(context).primaryColor,
+                              decoration: InputDecoration(
+                                  labelText: "Nom"),
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return S
+                                      .of(context)
+                                      .inscriptionMsgFieldsEmpty;
+                                }
+                                this.nom = value;
+                                return null;
+                              },
+                            ),
+                            TextFormField(
+                              cursorColor: Theme.of(context).primaryColor,
+                              decoration: InputDecoration(
+                                  labelText: "Prénom"),
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return S
+                                      .of(context)
+                                      .inscriptionMsgFieldsEmpty;
+                                }
+                                this.prenom = value;
+                                return null;
+                              },
+                            ),
                             TextFormField(
                               decoration: InputDecoration(labelText: S.of(context).inscriptionLabelMail),
                               keyboardType: TextInputType.emailAddress,
@@ -154,6 +197,24 @@ class SignUpViewState extends State<SignUpView> {
                                 return null;
                               },
                             ),
+                            Column(
+                                children: <Widget>[
+                                  Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        Text(S.of(context).profilGenre),
+                                        Container(width: 8),
+                                        DropdownButton<String>(
+                                          items: dropdownMenuGenreOptions,
+                                          onChanged: (String newValue) {
+                                            setState(() {
+                                              _selectedChoice = newValue;
+                                            });
+                                          },
+                                          value: _selectedChoice,
+                                        ),
+                                      ]),
+                                ]),
                             Container(
                               height: 60,
                             ),
