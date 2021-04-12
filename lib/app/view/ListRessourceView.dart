@@ -20,11 +20,16 @@ class ListResourceViewState extends State<ListResourceView> {
   }
 
   void fetchRessources() async {
+    List tmp_item;
     final response = await get(Uri.http(Constante.baseApiUrl, "/ressources"), headers: {'Content-type': 'application/json'});
-    debugPrint(response.statusCode.toString());
     if (response.statusCode == 200) {
+
+      tmp_item = jsonDecode(response.body)['data'];
+      debugPrint(tmp_item.length.toString());
+      tmp_item.removeWhere((item) => item["ValidationAdmin"] == false);
       setState(() {
-        item = jsonDecode(response.body)['data'];
+        item = tmp_item;
+        debugPrint(item.length.toString());
       });
       } else {
       throw Exception('Failed to load post');

@@ -25,20 +25,6 @@ class SettingsViewState extends State<SettingsView> {
     bool isSwitched = (Theme.of(context).brightness == Brightness.dark);
     var dropValue = S.of(context).actualLocale;
    return ListView(children: <Widget>[
-      FlatButton(
-        color: Theme.of(context).primaryColor,
-        child: Container(
-            margin: EdgeInsets.all(10),
-            child: ListTile(
-              title: Text(S.of(context).profilDisconnect,
-                  style: TextStyle(
-                      fontSize: 22,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold)),
-              trailing: Icon(Icons.exit_to_app, color: Colors.white, size: 40),
-            )),
-        onPressed: () => User.disconnect(),
-      ),
       ListTile(
           title: Text(S.of(context).profilDarkTheme),
           trailing: Switch(

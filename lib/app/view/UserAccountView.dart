@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:palikorne/app/model/User.dart';
 import 'package:palikorne/generated/l10n.dart';
 import 'package:palikorne/config/Constante.dart';
+import 'package:http/http.dart';
 
 class UserAccountView extends StatefulWidget {
   UserAccountViewState createState() => UserAccountViewState();
@@ -23,7 +24,7 @@ class UserAccountViewState extends State<UserAccountView>  {
   @override
   void initState() {
     super.initState();
-    //_selectedChoice = User.Genre;
+    _selectedChoice = User.Genre;
   }
 
   @override
@@ -435,8 +436,34 @@ class UserAccountViewState extends State<UserAccountView>  {
             },
         ),
       ),
-      ElevatedButton(onPressed: () {}, child: Text("Changer le mot de passe")),
-      ElevatedButton(onPressed: () {}, child: Text("Deconnexion"))
+      FlatButton(
+        color: Theme.of(context).primaryColor,
+        child: Container(
+            margin: EdgeInsets.all(10),
+            child: ListTile(
+              title: Text(S.of(context).profilUpdatePassword,
+                  style: TextStyle(
+                      fontSize: 22,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold)),
+              trailing: Icon(Icons.exit_to_app, color: Colors.white, size: 40),
+            )),
+        onPressed: () => User.disconnect(),
+      ),
+      FlatButton(
+        color: Theme.of(context).primaryColor,
+        child: Container(
+            margin: EdgeInsets.all(10),
+            child: ListTile(
+              title: Text(S.of(context).profilDisconnect,
+                  style: TextStyle(
+                      fontSize: 22,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold)),
+              trailing: Icon(Icons.exit_to_app, color: Colors.white, size: 40),
+            )),
+        onPressed: () => User.disconnect(),
+      ),
     ],);
   }
 }

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:palikorne/app/model/User.dart';
 import 'package:palikorne/app/view/AppView.dart';
@@ -22,20 +23,32 @@ class LoginViewState extends State<LoginView> {
   String mail;
 
   Future<String> connect(String mail, String password) async {
-    String url = Constante.baseApiUrl + '/fr/user/connect';
-    Map<String, String> headers = {"Content-type": "application/json"};
-    Object json = {
-      "mail": mail,
-      "password": password,
+    Map<String, String> headers = {
+      "Content-type": "application/json; charset=utf-8",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PUT, DELETE, HEAD",
     };
-    Response response = await post(
-        Uri.http(Constante.baseApiUrl, "/fr/user/connect"),
-        headers: headers,
-        body: jsonEncode(json));
+    Object json = {
+      "Mail": mail,
+      "Password": password,
+    };
+    Uri uri = Uri.http(Constante.baseApiUrl, "/login");
+    Response response =
+        await http.post(uri, headers: headers, body: jsonEncode(json));
     if (response.statusCode == 200) {
       return await response.body;
     } else {
-      return await response.statusCode.toString();
+      showDialog(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+                content: Text(S.of(context).connexionMsgConnectionError),
+                actions: <Widget>[
+                  FlatButton(
+                      child: Text(S.of(context).connexionCloseError),
+                      onPressed: () => Navigator.pop(context))
+                ],
+              ));
+      return await "";
     }
   }
 
@@ -58,7 +71,7 @@ class LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    return !isLogged
+    return isLogged
         ? AppView()
         : Scaffold(
             body: Container(
@@ -112,17 +125,17 @@ class LoginViewState extends State<LoginView> {
                                       .of(context)
                                       .inscriptionMsgFieldsEmpty;
                                 }
-                                RegExp regExp = new RegExp(
-                                    Constante.regexPassword,
-                                    caseSensitive: true,
-                                    multiLine: false);
-                                if (regExp.hasMatch(value)) {
-                                  this.password = value;
-                                } else {
-                                  return S
-                                      .of(context)
-                                      .connexionMsgWrongPassword;
-                                }
+                                // RegExp regExp = new RegExp(
+                                //     Constante.regexPassword,
+                                //     caseSensitive: true,
+                                //     multiLine: false);
+                                // if (regExp.hasMatch(value)) {
+                                this.password = value;
+                                // } else {
+                                //   return S
+                                //       .of(context)
+                                //       .connexionMsgWrongPassword;
+                                // }
                                 return null;
                               },
                             ),
@@ -154,26 +167,15 @@ class LoginViewState extends State<LoginView> {
                                   FocusScope.of(context)
                                       .requestFocus(new FocusNode());
                                   if (_formKey.currentState.validate()) {
-                                    User.connect();
-                                    setState(() {
-                                      this.isLogged = true;
+                                    this.connect(mail, password.toString()).then((value) {
+                                      if (value != "") {
+                                        User.connect(mail, jsonDecode(value)["token"],
+                                            rememberMe);
+                                        setState(() {
+                                          this.isLogged = true;
+                                        });
+                                      }
                                     });
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) =>
-                                            AlertDialog(
-                                              content: Text(S
-                                                  .of(context)
-                                                  .connexionMsgConnectionError),
-                                              actions: <Widget>[
-                                                FlatButton(
-                                                    child: Text(S
-                                                        .of(context)
-                                                        .connexionCloseError),
-                                                    onPressed: () =>
-                                                        Navigator.pop(context))
-                                              ],
-                                            ));
                                   }
                                 }),
                             FlatButton(

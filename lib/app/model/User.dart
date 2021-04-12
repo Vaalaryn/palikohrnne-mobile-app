@@ -1,5 +1,9 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
 import 'package:palikorne/app/view/LoginView.dart';
 import 'package:palikorne/config/Constante.dart';
+import 'package:http/http.dart';
 
 class User {
   static String Lang = Constante.defaultLang;
@@ -42,19 +46,28 @@ class User {
   static String _Token;
   static String get Token => _Token;
 
-  static connect() {
-    _Id = 1;
-    _Mail = "toto@gmail.toto";
-    _Prenom = "Brice";
-    _Nom = "Bitot";
-    _Rang = "1";
-    _Token = "hjdsgjkhds";
-    _Ville = "Rouen";
-    _Telephone = "0659545362";
-    _Adresse = "98 rue des toto";
-    _Genre = "M";
-    _Pseudo = "Vaala";
-    _CodePostal = "76120";
+  static connect(String mail, String token, bool rememberMe) async {
+    _Token = token;
+    Map<String, String> headers = {
+      "Content-type": "application/json; charset=utf-8",
+    };
+    Uri uri = Uri.http(Constante.baseApiUrl, "/citoyenByMail", {"Mail" : mail});
+    Response response = await get(uri,
+        headers: headers,
+    );
+    dynamic data = jsonDecode(response.body)["data"];
+    debugPrint(data["Pseudo"]);
+    _Ville = data["Ville"];
+    _Telephone = data["Telephone"];
+    _Adresse = data["Adresse"];
+    _Genre = data["Genre"];
+    _Pseudo = data["Pseudo"];
+    _CodePostal = data["CodePostal"];
+    _Id = data["ID"];
+    _Mail = data["Mail"];
+    _Prenom = data["Prenom"];
+    _Nom = data["Nom"];
+    _Rang = data["Rang"];
   }
 
   static Future<bool> check() {

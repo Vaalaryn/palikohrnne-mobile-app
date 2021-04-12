@@ -37,8 +37,6 @@ class SignUpViewState extends State<SignUpView> {
     };
     Response response =
     await post(Uri.http(Constante.baseApiUrl, "/fr/user/connect"), headers: headers, body: jsonEncode(json));
-    debugPrint(response.statusCode.toString());
-    debugPrint(response.body);
     if (response.statusCode == 200) {
       return await response.body;
     } else {
